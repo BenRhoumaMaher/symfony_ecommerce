@@ -8,7 +8,7 @@
  *
  * @category Controllers
  * @package  App\Controller\User
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */
@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Attribute\Route;
  *
  * @category Controllers
  * @package  App\Controller\User
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */
@@ -71,7 +71,7 @@ class UserController extends AbstractController
     {
         $user->setRoles(["ROLE_EDITOR", "ROLE_USER"]);
         $entityManager->flush();
-        $this->addFlash('success', 'le role editeur a été ajouté à votre utilisateur');
+        $this->addFlash('success', 'the editor role has been added to this user');
         return $this->redirectToRoute('app_user');
     }
 

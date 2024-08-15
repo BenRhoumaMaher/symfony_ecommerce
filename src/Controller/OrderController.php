@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Order;
 use App\Service\Cart;
+use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
 use App\Service\StripePayment;
@@ -82,7 +83,7 @@ class OrderController extends AbstractController
             if (!empty($data['total'])) {
                 $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
                 $order->setTotalPrice($totalPrice);
-                $order->setCreatedAt(new \DateTimeImmutable());
+                $order->setCreatedAt(new DateTimeImmutable());
                 $entityManager->persist($order);
                 $entityManager->flush();
 
@@ -92,10 +93,12 @@ class OrderController extends AbstractController
                     $orderProduct->setProduct($value['product']);
                     $orderProduct->setQte($value['quantity']);
                     $entityManager->persist($orderProduct);
-                    $entityManager->flush();
                 }
+                $entityManager->flush();
                 if ($order->isPayOnDelivery()) {
                     $session->set('cart', []);
+
+                    $entityManager->refresh($order);
 
                     $html = $this->renderView(
                         'mail/orderConfirm.html.twig',
@@ -186,7 +189,7 @@ class OrderController extends AbstractController
         $order = $orderRepository->find($id);
         $order->setCompleted(true);
         $entityManager->flush();
-        $this->addFlash('success', 'modification effectuée');
+        $this->addFlash('success', 'modified successfully');
         return $this->redirect($request->headers->get('referer'));
     }
 
@@ -203,7 +206,7 @@ class OrderController extends AbstractController
     {
         $entityManager->remove($order);
         $entityManager->flush();
-        $this->addFlash('danger', 'suppression effectuée');
+        $this->addFlash('danger', 'deleted!!!');
         return $this->redirectToRoute('app_orders_show');
     }
 

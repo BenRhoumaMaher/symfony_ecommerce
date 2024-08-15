@@ -7,7 +7,7 @@
  *
  * @category Controllers
  * @package  App\Controller\Security
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/security.html
  */
@@ -26,7 +26,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  *
  * @category Controllers
  * @package  App\Controller\Security
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/security.html
  */

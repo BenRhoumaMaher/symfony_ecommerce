@@ -17,19 +17,21 @@
 	}
 </style>
 <div class="container">
-	<h2>facture n: {{order.id}}</h2>
-    <hr>
-	<span>Date: {{order.createdAt|date}}</span>
-    <br><br><br>
-	<span>Informations du client</span>
+	<h2>Facture N:
+		{{order.id}}</h2>
+	<hr>
+	<span>Date:
+		{{order.createdAt|date}}</span>
+	<br>
+	<h5>Client informations</h5>
 	<table class="table table-borderd">
-		<tr>
-			<th>nom</th>
-			<th>prenom</th>
-			<th>telephone</th>
-			<th>adresse</th>
-			<th>ville</th>
-		</tr>
+		<thead>
+			<th>name</th>
+			<th>lastname</th>
+			<th>phone</th>
+			<th>adress</th>
+			<th>city</th>
+		</thead>
 		<tr>
 			<td>{{order.firstName}}</td>
 			<td>{{order.lastName}}</td>
@@ -38,33 +40,28 @@
 			<td>{{order.city.name}}</td>
 		</tr>
 	</table>
-    <h5>Corps de la commande</h5>
+	<span>Order body</span>
 	<table class="table table-borderd">
 		<thead>
-			<tr>
-				<th>Nom du produit</th>
-				<th>Prix unitaire</th>
-				<th>quantité</th>
-				<th>prix total</th>
-			</tr>
+			<th>Product name</th>
+			<th>Unity price</th>
+			<th>quantity</th>
+			<th>total price</th>
 		</thead>
 		{% for product in order.orderProducts %}
-			<tr>
-				<td>{{product.product.name}}</td>
-				<td>{{product.product.price}}
-					Dt</td>
-				<td>{{product.qte}}</td>
-				<td>{{product.product.price*product.qte}}
-					Dt</td>
-			</tr>
+			 <tr>
+                <td>{{product.product.name}}</td>
+                <td>{{product.product.price}} Dt</td>
+                <td>{{product.qte}}</td>
+                <td>{{product.product.price*product.qte}} Dt</td>
+                </tr>
 		{% endfor %}
 	</table>
-    <br><br><br>
-	<h5>Frais de livraison :
+	<h5>Delivery costs :
 		{{order.city.shippingCost}}
 		Dt</h5>
 	<hr>
-	<h2>Total à payer :
+	<h2>Total to pay :
 		{{order.totalPrice}}
 		Dt</h2>
 </div>

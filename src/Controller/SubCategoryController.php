@@ -7,7 +7,7 @@
  *
  * @category Controllers
  * @package  App\Controller\SubCategory
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */
@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Attribute\Route;
  *
  * @category Controllers
  * @package  App\Controller\SubCategory
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */

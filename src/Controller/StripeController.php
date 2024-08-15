@@ -8,7 +8,7 @@
  *
  * @category Controllers
  * @package  App\Controller\Stripe
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://stripe.com/docs/payments/integration-builder
  */
@@ -33,7 +33,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * @category Controllers
  * @package  App\Controller\Stripe
- * @author   Your Name <your.email@example.com>
+ * @author   Your Name <maherbenrhoumaaa@gmail.com>
  * @license  No license (Personal project)
  * @link     https://stripe.com/docs/payments/integration-builder
  */
