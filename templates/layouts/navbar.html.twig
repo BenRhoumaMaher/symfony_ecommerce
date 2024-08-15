@@ -25,7 +25,19 @@
 .navbar .dropdown-item,
 .navbar .btn {
     font-family: navFont, sans-serif;
+    color: inherit;
 }     
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:active,
+.navbar .btn:focus,
+.navbar .btn:active {
+    color: gray;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
 .navbar .nav-link:hover,
 .navbar .navbar-brand:hover,
 .navbar .dropdown-item:hover,
@@ -56,7 +68,8 @@
           <ul class="dropdown-menu">
             {% for category in categories %}
               <li class="dropdown-submenu">
-                <a class="dropdown-item text-secondary text-dark" href="#">
+                <a class="dropdown-item text-secondary text-dark" 
+                href="{{ path('app_category_product_filter', {'id': category.id}) }}">
                   {{ category.name }}
                 </a>
                 <ul class="dropdown-menu">
@@ -91,14 +104,6 @@
           </ul>
         </li>
         {% endif %}
-        {% if app.user == false %}
-        <li class="nav-item">
-          <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
-        </li>
-        {% endif %}
         {% if is_granted('ROLE_EDITOR') %}
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -110,6 +115,18 @@
               <a class="dropdown-item text-danger" href="{{ path('app_orders_show', {'type': 'is-not-completed'}) }}">Undelivered orders</a>
             </li>
           </ul>
+        </li>
+        {% endif %}
+        {% if app.user == false %}
+        <li class="nav-item">
+          <a href="{{ path('app_register') }}" class="nav-link text-info">Register</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ path('app_login') }}" class="nav-link text-success">Connect</a>
+        </li>
+        {% else %}
+          <li class="nav-item">
+          <a href="{{ path('app_logout') }}" class="nav-link text-danger">Logout</a>
         </li>
         {% endif %}
       </ul>

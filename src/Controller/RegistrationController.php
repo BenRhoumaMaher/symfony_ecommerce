@@ -3,7 +3,7 @@
 /**
  * RegistrationController
  *
- * Handles user registration by creating a new user account, 
+ * Handles user registration by creating a new user account,
  * hashing the user's password, persisting the user to the database, and logging the user in.
  *
  * @category Controllers
@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * RegistrationController
  *
- * Handles user registration by creating a new user account, 
+ * Handles user registration by creating a new user account,
  * hashing the user's password, persisting the user to the database, and logging the user in.
  *
  * @category Controllers
@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
      * @param UserPasswordHasherInterface $userPasswordHasher Service to hash the user's password.
      * @param Security                    $security           The security service to handle user login.
      * @param EntityManagerInterface      $entityManager      The entity manager to interact with the database.
-     
+
      * @return Response Returns the registration form if the form is not submitted or invalid, otherwise logs the user in and redirects them.
      */
     #[Route('/register', name: 'app_register')]

@@ -16,6 +16,18 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findProductsByCategory($categoryId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.subCategories', 'sc')
+            ->join('sc.products', 'p')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->select('p');
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */

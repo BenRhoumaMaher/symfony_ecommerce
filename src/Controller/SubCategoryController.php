@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use App\Entity\SubCategory;
 use App\Form\SubCategoryType;
+use App\Repository\CategoryRepository;
 use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,16 +42,19 @@ class SubCategoryController extends AbstractController
      * Lists all subcategories.
      *
      * @param SubCategoryRepository $subCategoryRepository The repository to fetch all subcategories.
-     
+
      * @return Response Renders the list of subcategories.
      */
     #[Route('/', name: 'app_sub_category_index', methods: ['GET'])]
-    public function index(SubCategoryRepository $subCategoryRepository): Response
-    {
+    public function index(
+        SubCategoryRepository $subCategoryRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
         return $this->render(
             'sub_category/index.html.twig',
             [
                 'sub_categories' => $subCategoryRepository->findAll(),
+                'categories' => $categoryRepository->findAll(),
             ]
         );
     }
@@ -60,7 +64,7 @@ class SubCategoryController extends AbstractController
      *
      * @param Request                $request       The current HTTP request.
      * @param EntityManagerInterface $entityManager The entity manager to persist the new subcategory.
-     
+
      * @return Response Redirects to the subcategory index page after successful creation.
      */
     #[Route('/new', name: 'app_sub_category_new', methods: ['GET', 'POST'])]
@@ -90,7 +94,7 @@ class SubCategoryController extends AbstractController
      * Shows the detail of a specific subcategory.
      *
      * @param SubCategory $subCategory The subcategory to display.
-     
+
      * @return Response Renders the subcategory detail page.
      */
     #[Route('/{id}', name: 'app_sub_category_show', methods: ['GET'])]
@@ -110,7 +114,7 @@ class SubCategoryController extends AbstractController
      * @param Request                $request       The current HTTP request.
      * @param SubCategory            $subCategory   The subcategory to edit.
      * @param EntityManagerInterface $entityManager The entity manager to update the subcategory.
-    
+
      * @return Response Redirects to the subcategory index page after successful update.
      */
     #[Route('/{id}/edit', name: 'app_sub_category_edit', methods: ['GET', 'POST'])]
@@ -140,7 +144,7 @@ class SubCategoryController extends AbstractController
      * @param Request                $request       The current HTTP request.
      * @param SubCategory            $subCategory   The subcategory to delete.
      * @param EntityManagerInterface $entityManager The entity manager to remove the subcategory.
-     
+
      * @return Response Redirects to the subcategory index page after deletion.
      */
     #[Route('/{id}', name: 'app_sub_category_delete', methods: ['POST'])]

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BillController.php
  *
@@ -41,11 +42,11 @@ class BillController extends AbstractController
 
     /**
      * Generates and streams a PDF bill for a given order
-     * 
+     *
      * @param int             $id              The ID of the order for which the bill should be generated.
      * @param OrderRepository $orderRepository Service responsible for fetching orders from the database.
-     
-     * @return Response A Symfony Response object that streams 
+
+     * @return Response A Symfony Response object that streams
      * the generated PDF to the client.
      */
     public function index($id, OrderRepository $orderRepository): Response

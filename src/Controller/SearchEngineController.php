@@ -3,7 +3,7 @@
 /**
  * SearchEngineController
  *
- * Handles search engine functionality by querying the database for products 
+ * Handles search engine functionality by querying the database for products
  * based on a keyword and rendering the results.
  *
  * @category Controllers
@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * SearchEngineController
  *
- * Handles search engine functionality by querying the database for products 
+ * Handles search engine functionality by querying the database for products
  * based on a keyword and rendering the results.
  *
  * @category Controllers
@@ -40,7 +40,7 @@ class SearchEngineController extends AbstractController
      *
      * @param Request           $request           The current HTTP request containing the search query.
      * @param ProductRepository $productRepository The repository to fetch products from the database.
-     
+
      * @return Response Renders the search results page with the found products and the original search term.
      */
     #[Route('/search/engine', name: 'app_search_engine', methods: ['GET'])]

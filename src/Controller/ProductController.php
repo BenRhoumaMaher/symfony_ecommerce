@@ -3,7 +3,7 @@
 /**
  * ProductController
  *
- * Manages product-related actions such as listing, creating, editing, deleting, 
+ * Manages product-related actions such as listing, creating, editing, deleting,
  * and managing stock history.
  *
  * @category Controllers
@@ -30,11 +30,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * ProductController
  *
- * Manages product-related actions such as listing, creating, editing, deleting, 
+ * Manages product-related actions such as listing, creating, editing, deleting,
  * and managing stock history.
  *
  * @category Controllers
@@ -50,7 +49,7 @@ class ProductController extends AbstractController
      * Lists all products.
      *
      * @param ProductRepository $productRepository The repository to fetch products from the database.
-     
+
      * @return Response Renders the list of all products.
      */
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
@@ -70,7 +69,7 @@ class ProductController extends AbstractController
      * @param Request                $request       The current HTTP request.
      * @param EntityManagerInterface $entityManager The entity manager to persist entities.
      * @param SluggerInterface       $slugger       The slugger service to generate slugs.
-     
+
      * @return Response Processes the creation of a new product and redirects to the product list.
      */
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
@@ -122,7 +121,7 @@ class ProductController extends AbstractController
      * Shows a single product.
      *
      * @param Product $product The product to display.
-     
+
      * @return Response Renders the details of the specified product.
      */
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
@@ -143,7 +142,7 @@ class ProductController extends AbstractController
      * @param Product                $product       The product being edited.
      * @param EntityManagerInterface $entityManager The entity manager to update entities.
      * @param SluggerInterface       $slugger       The slugger service to generate slugs.
-     
+
      * @return Response Processes the update of the product and redirects to the product list.
      */
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
@@ -188,7 +187,7 @@ class ProductController extends AbstractController
      * @param Request                $request       The current HTTP request.
      * @param Product                $product       The product to delete.
      * @param EntityManagerInterface $entityManager The entity manager to remove entities.
-    
+
      * @return Response Deletes the specified product and redirects to the product list.
      */
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
@@ -209,7 +208,7 @@ class ProductController extends AbstractController
      * @param EntityManagerInterface $entityManager     The entity manager to persist entities.
      * @param Request                $request           The current HTTP request.
      * @param ProductRepository      $productRepository The repository to fetch products from the database.
-     
+
      * @return Response Processes the addition of stock to the specified product and redirects to the product list.
      */
     #[Route('/add/product/{id}/stock', name: 'app_product_stock_add', methods: ['POST', 'GET'])]
@@ -256,7 +255,7 @@ class ProductController extends AbstractController
      * @param int                         $id                          The ID of the product whose stock history is to be shown.
      * @param ProductRepository           $productRepository           The repository to fetch products from the database.
      * @param AddProductHistoryRepository $addProductHistoryRepository The repository to fetch stock history records.
-    
+
      * @return Response Renders the stock history of the specified product.
      */
     #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]

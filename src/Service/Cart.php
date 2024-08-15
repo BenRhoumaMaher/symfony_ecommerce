@@ -8,7 +8,6 @@ class Cart
 {
     public function __construct(private readonly ProductRepository $productRepository)
     {
-
     }
     public function getCart($session): array
     {

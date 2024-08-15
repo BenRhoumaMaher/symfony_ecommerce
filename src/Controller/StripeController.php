@@ -50,7 +50,10 @@ class StripeController extends AbstractController
     #[Route('/pay/success', name: 'app_stripe_success')]
     public function success(Cart $cart, SessionInterface $session): Response
     {
-        $session->set('cart', []);
+        $session->set(
+            'cart',
+            []
+        );
         return $this->render(
             'stripe/index.html.twig',
             [
@@ -85,8 +88,11 @@ class StripeController extends AbstractController
      * @return Response Responds to the webhook notification.
      */
     #[Route('/stripe/notify', name: 'app_stripe_notify')]
-    public function stripeNotify(Request $request, OrderRepository $orderRepository, EntityManagerInterface $entityManager): Response
-    {
+    public function stripeNotify(
+        Request $request,
+        OrderRepository $orderRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         Stripe::setApiKey($_SERVER['STRIPE_SECRET']);
         $endpoint_secret = 'whsec_78d8b4ee4db22da481c1bbf5760d83a50976723025cdf3387257b229d66154ee';
         $payload = $request->getContent();
@@ -103,7 +109,9 @@ class StripeController extends AbstractController
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
             return new Response('Signature invalid');
         }
-        switch ($event->type) {
+        switch (
+            $event->type
+        ) {
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
                 $fileName = 'stripe-details-' . uniqid() . 'txt';

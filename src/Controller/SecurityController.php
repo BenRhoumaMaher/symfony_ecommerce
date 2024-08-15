@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * SecurityController
  *
@@ -37,7 +36,7 @@ class SecurityController extends AbstractController
      * Displays the login form.
      *
      * @param AuthenticationUtils $authenticationUtils Utility service to retrieve the last username and authentication errors.
-     
+
      * @return Response Renders the login form with the last entered username and any authentication errors.
      */
     #[Route(path: '/login', name: 'app_login')]

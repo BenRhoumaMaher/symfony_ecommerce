@@ -3,7 +3,7 @@
 /**
  * UserController
  *
- * Manages users within the admin panel, including listing, changing roles, 
+ * Manages users within the admin panel, including listing, changing roles,
  * removing roles, and deleting users.
  *
  * @category Controllers
@@ -16,6 +16,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * UserController
  *
- * Manages users within the admin panel, including listing, changing roles, 
+ * Manages users within the admin panel, including listing, changing roles,
  * removing roles, and deleting users.
  *
  * @category Controllers
@@ -40,16 +41,19 @@ class UserController extends AbstractController
      * Lists all users.
      *
      * @param UserRepository $userRepository The repository to fetch all users.
-     
+
      * @return Response Renders the list of users.
      */
     #[Route('/admin/user', name: 'app_user')]
-    public function index(UserRepository $userRepository): Response
-    {
+    public function index(
+        UserRepository $userRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
         return $this->render(
             'user/index.html.twig',
             [
                 'users' => $userRepository->findAll(),
+                'categories' => $categoryRepository->findAll(),
             ]
         );
     }
@@ -59,7 +63,7 @@ class UserController extends AbstractController
      *
      * @param EntityManagerInterface $entityManager The entity manager to persist changes.
      * @param User                   $user          The user whose role is being changed.
-     
+
      * @return Response Redirects to the user index page after updating the user's role.
      */
     #[Route('/admin/user/{id}/to/editor', name: 'app_user_to_editor')]
@@ -76,7 +80,7 @@ class UserController extends AbstractController
      *
      * @param EntityManagerInterface $entityManager The entity manager to persist changes.
      * @param User                   $user          The user whose role is being modified.
-     
+
      * @return Response Redirects to the user index page after updating the user's role.
      */
     #[Route('/admin/user/{id}/remove/editor/role', name: 'app_user_remove_editor_role')]
@@ -93,7 +97,7 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $entityManager  The entity manager to remove the user.
      * @param int                    $id             The ID of the user to delete.
      * @param UserRepository         $userRepository The repository to find the user by ID.
-     
+
      * @return Response Redirects to the user index page after deletion.
      */
     #[Route('/admin/user/{id}/remove', name: 'app_user_remove')]

@@ -44,7 +44,6 @@ class CartController extends AbstractController
     public function __construct(
         private readonly ProductRepository $productRepository
     ) {
-
     }
 
     /**
@@ -106,7 +105,7 @@ class CartController extends AbstractController
      * Decreases the quantity of a product in the cart by 1 or removes the product
      * from the cart if its quantity reaches 0.
      *
-     * @param int              $id      The ID of the product to remove 
+     * @param int              $id      The ID of the product to remove
      *                                  from the cart.
      * @param SessionInterface $session The session interface to access session data.
 

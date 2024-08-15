@@ -41,7 +41,7 @@ class StripePayment
             [
                 'line_items' => [
                     array_map(
-                        fn(array $product) =>
+                        fn (array $product) =>
                         [
                             'quantity' => $product['qte'],
                             'price_data' => [

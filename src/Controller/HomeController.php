@@ -44,7 +44,7 @@ class HomeController extends AbstractController
      * @param CategoryRepository $categoryRepository The repository to fetch categories from the database.
      * @param Request            $request            The current HTTP request.
      * @param PaginatorInterface $paginator          The paginator service to paginate the products.
-     
+
      * @return Response Renders the homepage with the paginated list of products and categories.
      */
     #[Route('/', name: 'app_home', methods: ['GET'])]
@@ -73,7 +73,7 @@ class HomeController extends AbstractController
      * @param Product            $product            The product to display.
      * @param ProductRepository  $productRepository  The repository to fetch products from the database.
      * @param CategoryRepository $categoryRepository The repository to fetch categories from the database.
-     
+
      * @return Response Renders the product details along with other recent products and categories.
      */
     #[Route('/product/{id}/show', name: 'app_show', methods: ['GET'])]
@@ -96,7 +96,7 @@ class HomeController extends AbstractController
      * @param mixed                 $id                    The ID of the subcategory to filter products by.
      * @param SubCategoryRepository $subCategoryRepository The repository to fetch subcategories from the database.
      * @param CategoryRepository    $categoryRepository    The repository to fetch categories from the database.
-     
+
      * @return Response Renders the filtered list of products along with the selected subcategory and all available categories.
      */
     #[Route('/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods: ['GET'])]
@@ -109,6 +109,27 @@ class HomeController extends AbstractController
             [
                 'products' => $products,
                 'subCategory' => $subCategory,
+                'categories' => $categoryRepository->findAll()
+            ]
+        );
+    }
+
+    #[Route('/category/{id}/filter', name: 'app_category_product_filter', methods: ['GET'])]
+    public function filterCategories($id, CategoryRepository $categoryRepository): Response
+    {
+        $category = $categoryRepository->find($id);
+        $products = [];
+        foreach ($category->getSubCategories() as $subCategory) {
+            foreach ($subCategory->getProducts() as $product) {
+                $products[] = $product;
+            }
+        }
+        shuffle($products);
+        return $this->render(
+            'home/filterCategory.html.twig',
+            [
+                'products' => $products,
+                'category' => $category,
                 'categories' => $categoryRepository->findAll()
             ]
         );

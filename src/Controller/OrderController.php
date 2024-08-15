@@ -47,7 +47,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class OrderController extends AbstractController
 {
-
     public function __construct(private MailerInterface $mailer)
     {
     }
@@ -61,7 +60,7 @@ class OrderController extends AbstractController
      * @param EntityManagerInterface $entityManager     The entity manager to persist entities.
      * @param Cart                   $cart              The shopping cart service.
      * @param OrderRepository        $orderRepository   The repository to fetch orders from the database.
-     
+
      * @return Response Renders the order form and processes the order submission.
      */
     #[Route('/order', name: 'app_order')]
@@ -118,8 +117,6 @@ class OrderController extends AbstractController
                 $stripeRedirectUrl = $payment->getStripeRedirectUrl();
                 return $this->redirect($stripeRedirectUrl);
             }
-
-
         }
 
         return $this->render(
@@ -138,7 +135,7 @@ class OrderController extends AbstractController
      * @param OrderRepository    $orderRepository The repository to fetch orders from the database.
      * @param Request            $request         The current HTTP request.
      * @param PaginatorInterface $paginator       The paginator service to paginate the orders.
-     
+
      * @return Response Renders the list of orders based on the specified type.
      */
 
@@ -176,7 +173,7 @@ class OrderController extends AbstractController
      * @param OrderRepository        $orderRepository The repository to fetch orders from the database.
      * @param EntityManagerInterface $entityManager   The entity manager to persist entities.
      * @param Request                $request         The current HTTP request.
-     
+
      * @return Response Redirects back to the referring page with a success flash message.
      */
     #[Route('/editor/order/{id}/is-completed/update', name: 'app_orders_is_completed_update')]
@@ -198,11 +195,11 @@ class OrderController extends AbstractController
      *
      * @param Order                  $order         The order to remove.
      * @param EntityManagerInterface $entityManager The entity manager to remove entities.
-     
+
      * @return Response Redirects to the orders list with a danger flash message.
      */
     #[Route('/editor/order/{id}/remove', name: 'app_orders_remove')]
-    public function removeOrder(Order $order, EntityManagerInterface $entityManager, ): Response
+    public function removeOrder(Order $order, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($order);
         $entityManager->flush();
@@ -225,7 +222,7 @@ class OrderController extends AbstractController
      * Calculates the shipping cost for a city.
      *
      * @param City $city The city for which to calculate the shipping cost.
-     
+
      * @return Response Returns the shipping cost as JSON.
      */
     #[Route('/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]

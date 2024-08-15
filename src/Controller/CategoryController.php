@@ -3,7 +3,7 @@
 /**
  * CategoryController
  *
- * Manages categories in the admin panel, allowing for listing, creating, 
+ * Manages categories in the admin panel, allowing for listing, creating,
  * updating, and deleting categories.
  *
  * @category Controllers
@@ -24,11 +24,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * CategoryController
  *
- * Manages categories in the admin panel, allowing for listing, creating, 
+ * Manages categories in the admin panel, allowing for listing, creating,
  * updating, and deleting categories.
  *
  * @category Controllers
@@ -43,9 +42,9 @@ class CategoryController extends AbstractController
     /**
      * Lists all categories ordered by their IDs in ascending order.
      *
-     * @param CategoryRepository $categoryRepository The repository to fetch categories 
+     * @param CategoryRepository $categoryRepository The repository to fetch categories
      *                                               from the database.
-     
+
      * @return Response Renders the list of categories.
      */
     #[Route('/admin/category', name: 'app_category')]
@@ -63,12 +62,12 @@ class CategoryController extends AbstractController
     /**
      * Creates a new category.
      *
-     * Initializes a form with a new Category entity, handles the submission, 
+     * Initializes a form with a new Category entity, handles the submission,
      * persists the entity to the database, and redirects to the category list upon success.
      *
      * @param EntityManagerInterface $entityManager The entity manager to persist entities.
      * @param Request                $request       The current HTTP request.
-     
+
      * @return Response Redirects to the category list after successful creation.
      */
     #[Route('/admin/category/new', name: 'app_category_new')]
@@ -96,14 +95,14 @@ class CategoryController extends AbstractController
     /**
      * Updates an existing category.
      *
-     * Initializes a form with the given Category entity, handles the submission, 
+     * Initializes a form with the given Category entity, handles the submission,
      * updates the entity in the database,
      * and redirects to the category list upon success.
      *
      * @param Category               $category      The category to update.
      * @param EntityManagerInterface $entityManager The entity manager to persist entities.
      * @param Request                $request       The current HTTP request.
-     
+
      * @return Response              Redirects to the category list after successful update.
      */
     #[Route('/admin/category/{id}/update', name: 'app_category_update')]
@@ -129,12 +128,12 @@ class CategoryController extends AbstractController
     /**
      * Deletes a category.
      *
-     * Removes the given Category entity from the database 
+     * Removes the given Category entity from the database
      * and redirects to the category list.
      *
      * @param Category               $category      The category to delete.
      * @param EntityManagerInterface $entityManager The entity manager to remove entities.
-     
+
      * @return Response Redirects to the category list after successful deletion.
      */
     #[Route('/admin/category/{id}/delete', name: 'app_category_delete')]

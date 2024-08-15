@@ -3,7 +3,7 @@
 /**
  * CityController
  *
- * Manages cities in the editor, allowing for listing, creating, showing, 
+ * Manages cities in the editor, allowing for listing, creating, showing,
  * editing, and deleting cities.
  *
  * @category Controllers
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * CityController
  *
- * Manages cities in the editor, allowing for listing, creating, showing, 
+ * Manages cities in the editor, allowing for listing, creating, showing,
  * editing, and deleting cities.
  *
  * @category Controllers
@@ -42,9 +42,9 @@ class CityController extends AbstractController
     /**
      * Lists all cities.
      *
-     * @param CityRepository $cityRepository The repository to fetch 
+     * @param CityRepository $cityRepository The repository to fetch
      *                                       cities from the database.
-     
+
      * @return Response Renders the list of cities.
      */
     #[Route('/', name: 'app_city_index', methods: ['GET'])]
@@ -61,13 +61,13 @@ class CityController extends AbstractController
     /**
      * Creates a new city.
      *
-     * Initializes a form with a new City entity, handles the submission, 
+     * Initializes a form with a new City entity, handles the submission,
      * persists the entity to the database,
      * and redirects to the city list upon success.
      *
      * @param Request                $request       The current HTTP request.
      * @param EntityManagerInterface $entityManager The entity manager to persist entities.
-     
+
      * @return Response Redirects to the city list after successful creation.
      */
     #[Route('/new', name: 'app_city_new', methods: ['GET', 'POST'])]
@@ -97,7 +97,7 @@ class CityController extends AbstractController
      * Shows a single city.
      *
      * @param City $city The city to display.
-     
+
      * @return Response Renders the city details.
      */
     #[Route('/{id}', name: 'app_city_show', methods: ['GET'])]
@@ -114,14 +114,14 @@ class CityController extends AbstractController
     /**
      * Edits a city.
      *
-     * Initializes a form with the given City entity, handles the submission, 
+     * Initializes a form with the given City entity, handles the submission,
      * updates the entity in the database,
      * and redirects to the city list upon success.
      *
      * @param Request                $request       The current HTTP request.
      * @param City                   $city          The city to update.
      * @param EntityManagerInterface $entityManager The entity manager to persist entities.
-    
+
      * @return Response Redirects to the city list after successful update.
      */
     #[Route('/{id}/edit', name: 'app_city_edit', methods: ['GET', 'POST'])]
@@ -148,13 +148,13 @@ class CityController extends AbstractController
     /**
      * Deletes a city.
      *
-     * Validates CSRF token, removes the given City entity from the database, 
+     * Validates CSRF token, removes the given City entity from the database,
      * and redirects to the city list.
      *
      * @param Request                $request       The current HTTP request.
      * @param City                   $city          The city to delete.
      * @param EntityManagerInterface $entityManager The entity manager to remove entities.
-     
+
      * @return Response Redirects to the city list after successful deletion.
      */
     #[Route('/{id}', name: 'app_city_delete', methods: ['POST'])]
