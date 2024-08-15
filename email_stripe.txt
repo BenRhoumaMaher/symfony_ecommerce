@@ -1,0 +1,5 @@
+email :
+php bin/console messenger:consume async -vv
+stripe :
+stripe login
+stripe listen --forward-to 127.0.0.1:8000/stripe/notify

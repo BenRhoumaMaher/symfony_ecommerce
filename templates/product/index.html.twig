@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+<style>
+    .table-container {
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn-outline-primary {
+        display: inline-block;
+        margin-top: 20px;
+    }
+    @font-face{
+            font-family: myFont;
+            src:url(cloudsters-cloudsters-400.ttf);
+        }
+h1{
+	font-family: myFont;
+}
+@font-face{
+            font-family: productFont;
+            src:url(carrol-wild-carrol-wild-clean-400.ttf);
+        }
+body {
+            font-family: productFont, sans-serif;
+        }
+</style>
+<div class="table-container mt-5 mb-5 container-fluid">
+    <h1>Product index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set counter = 1 %}
+        {% for product in products %}
+            <tr>
+                <td>{{ counter }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                {% if product.stock > 0 %}
+                {{ product.stock }}</td>
+                {% else %}
+                <span class="text-bg-danger">Out of stock</span>
+                {% endif %}
+                <td>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}" style="text-decoration: none;" class="text-info">edit</a>
+        |
+                    <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" style="text-decoration: none;" class="text-danger">Add stock</a>
+                </td>
+            </tr>
+            {% set counter = counter + 1 %}
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_product_new') }}" class="btn btn-primary">Create new</a>
+
+</div>
+{% endblock %}

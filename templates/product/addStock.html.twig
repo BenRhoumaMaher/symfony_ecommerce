@@ -1,0 +1,17 @@
+{% include 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+    <br>
+    <h1>Add stock for : <span class="text-secondary">{{ product.name }}</span></h1>
+    <br>
+    {% include "layouts/_flash_message.html.twig" %}
+    {{ form_start(form) }}
+    {{ form_row(form.qte,{'attr' : {'class':'form form-control'}}) }}
+    <input type="submit" class="btn btn-success btn-block mt-2">
+    <a href="{{ path('app_product_stock_add_history', {'id': product.id}) }}" style="text-decoration: none;">
+    <input type="button" class="btn btn-warning btn-block mt-2" value="stock history">
+    </a>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

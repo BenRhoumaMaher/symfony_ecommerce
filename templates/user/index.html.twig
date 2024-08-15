@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs !{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <table class="table table-bordered">
+    <tr>
+        <th>id</th>
+        <th>email</th>
+        <th>name</th>
+        <th>lastname</th>
+        <th>role</th>
+        <th>action</th>
+        </tr>
+    {% for user in users %}
+        <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>
+        {% if ('ROLE_ADMIN' in user.roles) %}
+        administrateur
+        {% elseif ('ROLE_EDITOR') in user.roles %}
+            editeur
+            {% else %}
+            client
+        {% endif %}
+        </td>
+        <td>
+        {% if ('ROLE_ADMIN' in user.roles) == false %}
+        {% if ('ROLE_EDITOR' in user.roles) == false %}
+
+            <a onclick="return confirm('voulez vous vraiement affecter le role editeur')" 
+            class=" btn btn-outline-primary"
+            href="{{path('app_user_to_editor', {'id': user.id})}}"
+            >
+            add as editor
+            </a>
+            {% else %}
+                <a onclick="return confirm('voulez vous vraiement retirer le role editeur')" 
+            class=" btn btn-outline-danger"
+            href="{{path('app_user_remove_editor_role', {'id': user.id})}}"
+            >
+            delete editor
+            </a>
+        {% endif %}
+        <a onclick="return confirm('voulez vous vraiement supprimer cet utilisateur') href="{{path('app_user_remove', {'id': user.id})}}" class="btn btn-danger">Remove</a>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

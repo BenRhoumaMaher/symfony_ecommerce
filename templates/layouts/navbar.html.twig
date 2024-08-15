@@ -1,0 +1,122 @@
+<style>
+.navbar-nav .nav-item.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+@font-face{
+            font-family: navFont;
+            src:url(blackpast-blackpast-400.ttf);
+        }
+.navbar,
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .dropdown-item,
+.navbar .btn {
+    font-family: navFont, sans-serif;
+}     
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover,
+.navbar .dropdown-item:hover,
+.navbar .btn:hover {
+    color: black;
+} 
+.subcategory-hover:hover {
+    color: black;
+    text-decoration: none;
+}
+</style>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ path('app_home') }}">M&Code Shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
+        </li>
+        {% if categories is defined %}
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu">
+            {% for category in categories %}
+              <li class="dropdown-submenu">
+                <a class="dropdown-item text-secondary text-dark" href="#">
+                  {{ category.name }}
+                </a>
+                <ul class="dropdown-menu">
+                  {% for subCategory in category.subCategories %}
+                  <li><a class="dropdown-item text-dark" href="{{ path('app_home_product_filter', {'id': subCategory.id}) }}">{{ subCategory.name }}</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administration
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_category') }}">Categories</a></li>
+            <li><hr class="dropdown-divider"></li>
+            {# <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_category_new') }}">Add category</a></li>
+            <li><hr class="dropdown-divider"></li> #}
+            <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_sub_category_index') }}">Subcategories</a></li>
+           <li><hr class="dropdown-divider"></li>
+            {# <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_sub_category_new') }}">Add subcategory</a></li>
+           <li><hr class="dropdown-divider"></li> #}
+            <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_product_index') }}">Products</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-secondary text-dark" href="{{ path('app_user') }}">Users</a></li>
+          </ul>
+        </li>
+        {% endif %}
+        {% if app.user == false %}
+        <li class="nav-item">
+          <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
+        </li>
+        {% endif %}
+        {% if is_granted('ROLE_EDITOR') %}
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Orders
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item text-success" href="{{ path('app_orders_show', {'type': 'is-completed'}) }}">Orders delivered</a>
+              <a class="dropdown-item text-danger" href="{{ path('app_orders_show', {'type': 'is-not-completed'}) }}">Undelivered orders</a>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
+      </ul>
+      <form data-turbo="false" method="GET" action="{{ path('app_search_engine') }}" class="d-flex" role="search">
+        <input name="word" class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>

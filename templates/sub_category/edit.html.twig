@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SubCategory{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="form">
+        <br>
+        <h2>Modify subcategory</h2>
+        <br>
+        {{ form_start(form) }}
+        {{ form_row(form.name, {'attr': {'class': 'form form-control'}}) }}
+        {{ form_row(form.category, {'attr': {'class': 'form-control'}}) }}
+        <br>
+        <input type="submit" value="modify" class="btn btn-primary">
+        <input type="button" value="cancel" onclick="window.location.href='/admin/category';" class="btn btn-secondary">
+        {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
