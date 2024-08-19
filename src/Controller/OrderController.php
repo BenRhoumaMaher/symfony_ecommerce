@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Order;
 use App\Service\Cart;
+use App\Service\MailService;
 use DateTimeImmutable;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
@@ -68,10 +69,8 @@ class OrderController extends AbstractController
     public function index(
         Request $request,
         SessionInterface $session,
-        ProductRepository $productRepository,
         EntityManagerInterface $entityManager,
         Cart $cart,
-        OrderRepository $orderRepository
     ): Response {
 
         $data = $cart->getCart($session);

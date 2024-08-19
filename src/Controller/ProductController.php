@@ -15,20 +15,30 @@
 
 namespace App\Controller;
 
-use App\Entity\AddProductHistory;
+use Logger;
+use DateTimeImmutable;
 use App\Entity\Product;
-use App\Form\AddProductHistoryType;
 use App\Form\ProductType;
+use App\Service\MailService;
+use Psr\Log\LoggerInterface;
+use App\Events\NewProductEvent;
 use App\Form\ProductUpdateType;
-use App\Repository\AddProductHistoryRepository;
+use App\Entity\AddProductHistory;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
+use App\Form\AddProductHistoryType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\AddProductHistoryRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * ProductController
@@ -45,6 +55,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/editor/product')]
 class ProductController extends AbstractController
 {
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
     /**
      * Lists all products.
      *
@@ -73,8 +89,12 @@ class ProductController extends AbstractController
      * @return Response Processes the creation of a new product and redirects to the product list.
      */
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger,
+        UserRepository $userRepository,
+    ): Response {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -101,9 +121,25 @@ class ProductController extends AbstractController
             $stockHistory = new AddProductHistory();
             $stockHistory->setQte($product->getStock());
             $stockHistory->setProduct($product);
-            $stockHistory->setCreatedAt(new \DateTimeImmutable());
+            $stockHistory->setCreatedAt(new DateTimeImmutable());
             $entityManager->persist($stockHistory);
             $entityManager->flush();
+
+            $users = $userRepository->findAll();
+            $html = $this->renderView(
+                'mail/productConfirmNew.html.twig',
+                [
+                    'product' => $product,
+                ]
+            );
+            foreach ($users as $user) {
+                $email = (new Email())
+                    ->from('M&CodeShop@gmail.com')
+                    ->to($user->getEmail())
+                    ->subject('New Product Added')
+                    ->html($html);
+                $this->mailer->send($email);    
+            }
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
