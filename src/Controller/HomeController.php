@@ -48,11 +48,21 @@ class HomeController extends AbstractController
      * @return Response Renders the homepage with the paginated list of products and categories.
      */
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginator): Response
-    {
-
-        $data = $productRepository->findAll();
-        shuffle($data);
+    public function index(
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+        $sort = $request->query->get('sort');
+        if ($sort === 'desc') {
+            $data = $productRepository->findBy([], ['price' => 'DESC']);
+        } elseif ($sort === 'asc') {
+            $data = $productRepository->findBy([], ['price' => 'ASC']);
+        } else {
+            $data = $productRepository->findAll();
+            shuffle($data);
+        }
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -62,7 +72,8 @@ class HomeController extends AbstractController
             'home/index.html.twig',
             [
                 'products' => $products,
-                'categories' => $categoryRepository->findAll()
+                'categories' => $categoryRepository->findAll(),
+                'sort' => $sort
             ]
         );
     }

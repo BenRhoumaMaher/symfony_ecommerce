@@ -189,7 +189,6 @@ class OrderController extends AbstractController
         $order = $orderRepository->find($id);
         $order->setCompleted(true);
         $entityManager->flush();
-        $this->addFlash('success', 'modified successfully');
         return $this->redirect($request->headers->get('referer'));
     }
 
@@ -206,7 +205,6 @@ class OrderController extends AbstractController
     {
         $entityManager->remove($order);
         $entityManager->flush();
-        $this->addFlash('danger', 'deleted!!!');
         return $this->redirectToRoute('app_orders_show');
     }
 

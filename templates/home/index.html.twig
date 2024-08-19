@@ -1,43 +1,43 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-<style>
-.glass-effect {
-    transition: all 0.3s ease-in-out;
-    border-radius: 10px;
-    filter: blur(0px) brightness(1);
-}
+	<style>
+		.glass-effect {
+			transition: all 0.3s ease-in-out;
+			border-radius: 10px;
+			filter: blur(0px) brightness(1);
+		}
 
-.glass-effect:hover {
-    transform: scale(1.05);
-    animation: blurEffect 0.6s ease-in-out forwards;
-}
+		.glass-effect:hover {
+			transform: scale(1.05);
+			animation: blurEffect 0.6s ease-in-out forwards;
+		}
 
-@keyframes blurEffect {
-    0% {
-        filter: blur(2px) brightness(1.2);
-    }
-    50% {
-        filter: blur(4px) brightness(1.4);
-    }
-    100% {
-        filter: blur(0px) brightness(1.2);
-    }
-}
-@font-face{
-            font-family: myFont;
-            src:url(cloudsters-cloudsters-400.ttf);
-        }
-h1{
-	font-family: myFont;
-}
-@font-face{
-            font-family: productFont;
-            src:url(carrol-wild-carrol-wild-clean-400.ttf);
-        }
-body {
-            font-family: productFont, sans-serif;
-        }
-</style>
+		@keyframes blurEffect {
+			0% {
+				filter: blur(2px) brightness(1.2);
+			}
+			50% {
+				filter: blur(4px) brightness(1.4);
+			}
+			100% {
+				filter: blur(0px) brightness(1.2);
+			}
+		}
+		@font-face {
+			font-family: myFont;
+			src: url('cloudsters-cloudsters-400.ttf');
+		}
+		h1 {
+			font-family: myFont;
+		}
+		@font-face {
+			font-family: productFont;
+			src: url('carrol-wild-carrol-wild-clean-400.ttf');
+		}
+		body {
+			font-family: productFont, sans-serif;
+		}
+	</style>
 {% endblock %}
 
 {% block title %}M&CODE SHOP
@@ -46,25 +46,43 @@ body {
 {% block body %}
 	<div class="container">
 		<h1 class="">Products</h1>
-		<div class="row">
+		<div class="dropdown mb-4">
+			<button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+				Sort by price
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="sortDropdown">
+				<li>
+					<a class="dropdown-item {% if sort == 'asc' %}active{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'sort': 'asc'})) }}">
+						Ascending
+					</a>
+				</li>
+				<li>
+					<a class="dropdown-item {% if sort == 'desc' %}active{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'sort': 'desc'})) }}">
+						Descending
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row mt-4">
 			{% for product in products %}
 				<div class="col-md-3 mt-4">
 					<div class="card" style="width:18rem; border-radius: 15px;">
-                    <a href="{{path('app_show', {'id':product.id})}}" style="text-decoration: none;">
-						<img src="{{asset('uploads/images/'~product.image)}}" class="card-img-top glass-effect" alt="">
+						<a href="{{path('app_show', {'id':product.id})}}" style="text-decoration: none;">
+							<img src="{{asset('uploads/images/'~product.image)}}" class="card-img-top glass-effect" alt="">
 						</a>
-                        <div class="card-body">
+						<div class="card-body">
 							<a href="{{path('app_show', {'id':product.id})}}" style="text-decoration: none;">
-							<h5 class="card-title text-secondary" style="font-weight: bold;">{{ product.name }}</h5>
-                            </a>
+								<h5 class="card-title text-secondary" style="font-weight: bold;">{{ product.name }}</h5>
+							</a>
 							<p class="card-text">{{ product.description|slice(0,50) }}..</p>
-                            <h4>{{product.price}} DNT</h4>
+							<h4>{{product.price}}
+								DNT</h4>
 							<a style="text-decoration: none;" href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Ajouter au panier</a>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div><br>
-        {{knp_pagination_render(products,'layouts/pagination_template.html.twig')}}
+		{{knp_pagination_render(products,'layouts/pagination_template.html.twig')}}
 	</div>
 {% endblock %}
