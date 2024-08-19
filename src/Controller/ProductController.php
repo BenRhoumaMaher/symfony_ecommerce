@@ -138,7 +138,7 @@ class ProductController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('New Product Added')
                     ->html($html);
-                $this->mailer->send($email);    
+                $this->mailer->send($email);
             }
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
