@@ -1,0 +1,31 @@
+#random-product-card .card {
+  width: 15rem;
+  font-size: 0.85rem;
+}
+
+#random-product-card .card-img-top {
+  height: 10rem;
+  object-fit: cover;
+}
+
+#random-product-card .card-body {
+  text-align: center;
+}
+
+#random-product-card .card-body h5 {
+  font-size: 1rem;
+  color: grey;
+}
+
+#random-product-card .card-body p {
+  font-size: 0.85rem;
+}
+
+#random-product-card .card-body #product-price {
+  color: red;
+}
+
+#random-product-card .card-body a {
+  text-decoration: none;
+  font-size: 0.85rem;
+}

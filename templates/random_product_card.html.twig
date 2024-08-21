@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="{{ asset('css/card.css') }}">
+<div id="random-product-card" style="display:none; position:fixed; bottom:20px; right:20px; opacity:0; transition: opacity 0.5s ease-in-out;">
+	<div class="card">
+		<img id="product-image" src="" class="card-img-top" alt="...">
+		<hr>
+		<div class="card-body">
+			<h5 id="product-name" class="card-title"></h5>
+			<p id="product-description" class="card-text"></p>
+			<p id="product-price" class="card-text"></p>
+			<hr>
+			<a id="product-link" href="" class="text-info">Show More</a>
+		</div>
+	</div>
+</div>
+<script src="{{ asset('js/random-product.js') }}"></script>

@@ -15,14 +15,17 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
+use App\Event\RandomProductDisplayEvent;
 use App\Repository\SubCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * HomeController
@@ -40,10 +43,11 @@ class HomeController extends AbstractController
     /**
      * Displays the homepage with a paginated list of products and all available categories.
      *
-     * @param ProductRepository  $productRepository  The repository to fetch products from the database.
-     * @param CategoryRepository $categoryRepository The repository to fetch categories from the database.
-     * @param Request            $request            The current HTTP request.
-     * @param PaginatorInterface $paginator          The paginator service to paginate the products.
+     * @param ProductRepository        $productRepository  The repository to fetch products from the database.
+     * @param CategoryRepository       $categoryRepository The repository to fetch categories from the database.
+     * @param Request                  $request            The current HTTP request.
+     * @param PaginatorInterface       $paginator          The paginator service to paginate the products.
+     * @param EventDispatcherInterface $eventDispatcher    The event dispatcher service to handle events.
 
      * @return Response Renders the homepage with the paginated list of products and categories.
      */
@@ -52,7 +56,8 @@ class HomeController extends AbstractController
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         Request $request,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        EventDispatcherInterface $eventDispatcher
     ): Response {
         $sort = $request->query->get('sort');
         if ($sort === 'desc') {
@@ -68,6 +73,11 @@ class HomeController extends AbstractController
             $request->query->getInt('page', 1),
             12
         );
+
+        $randomProduct = $data[array_rand($data)];
+        $event = new RandomProductDisplayEvent($randomProduct);
+        $eventDispatcher->dispatch($event, RandomProductDisplayEvent::NAME);
+
         return $this->render(
             'home/index.html.twig',
             [
@@ -75,6 +85,32 @@ class HomeController extends AbstractController
                 'categories' => $categoryRepository->findAll(),
                 'sort' => $sort
             ]
+        );
+    }
+
+    /**
+     * Provides a random product as JSON data.
+     *
+     * This endpoint returns a random product from the database, including its ID, name, description, price, and image URL.
+     *
+     * @param ProductRepository $productRepository The repository used to fetch products from the database.
+     *
+     * @return JsonResponse A JSON response containing the details of a random product.
+    */
+    #[Route('/random-product', name: 'random_product_route', methods: ['GET'])]
+    public function getRandomProduct(
+        ProductRepository $productRepository
+    ): JsonResponse {
+        $products = $productRepository->findAll();
+        $randomProduct = $products[array_rand($products)];
+
+        return new JsonResponse(
+            [
+            'id' => $randomProduct->getId(),
+            'name' => $randomProduct->getName(),
+            'description' => $randomProduct->getDescription(),
+            'price' => $randomProduct->getPrice(),
+            'image' => $randomProduct->getImage(),]
         );
     }
 
@@ -125,6 +161,17 @@ class HomeController extends AbstractController
         );
     }
 
+    /**
+     * Filters and displays products from a specified category and its subcategories.
+     *
+     * This endpoint fetches products from the given category and all its subcategories, shuffles them, and renders
+     * them in a template. It also passes the current category and all categories to the view.
+     *
+     * @param int                $id                 The ID of the category to filter products from.
+     * @param CategoryRepository $categoryRepository The repository used to fetch categories and products from the database.
+     *
+     * @return Response         A rendered view showing products from the specified category and its subcategories.
+    */
     #[Route('/category/{id}/filter', name: 'app_category_product_filter', methods: ['GET'])]
     public function filterCategories($id, CategoryRepository $categoryRepository): Response
     {
