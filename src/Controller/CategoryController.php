@@ -80,7 +80,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($category);
             $entityManager->flush();
-            $this->addFlash('success', 'your category has been created');
+            $this->addFlash('catcreated', 'your category has been created');
             return $this->redirectToRoute('app_category');
         }
 

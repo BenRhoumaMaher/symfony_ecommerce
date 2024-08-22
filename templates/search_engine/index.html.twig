@@ -5,23 +5,35 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Word search results " {{ word }} "</h1>
+		<h1>Word search results "
+			{{ word }}
+			"</h1>
 		<div class="row">
-			{% for product in products %}
-				<div class="col-md-3 mt-4">
-					<div class="card" style="width:18rem;">
-						<img src="{{asset('uploads/images/'~product.image)}}" class="card-img-top" alt="">
-						<div class="card-body">
-							<a href="{{path('app_show', {'id':product.id})}}">
-							<h5 class="card-title">{{ product.name }}</h5>
-                            </a>
-							<p class="card-text">{{ product.description|slice(0,60) }}..</p>
-                            <h3>{{product.price}} DNT</h3>
-							<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Ajouter au panier</a>
+			{% if products is empty %}
+				<div class="container-fluid vh-100 d-flex align-items-center justify-content-center" style="background-image: url('{{ asset('uploads/background.jpg') }}');
+													background-repeat: no-repeat; background-position: center;
+													background-size: cover; position: relative;
+													col-md-12 text-center text-bold">
+					<h1 class="text-danger">No products found !!!</h1>
+				</div>
+			{% else %}
+				{% for product in products %}
+					<div class="col-md-3 mt-4">
+						<div class="card" style="width:18rem;">
+							<img src="{{asset('uploads/images/'~product.image)}}" class="card-img-top" alt="">
+							<div class="card-body">
+								<a href="{{path('app_show', {'id':product.id})}}">
+									<h5 class="card-title">{{ product.name }}</h5>
+								</a>
+								<p class="card-text">{{ product.description|slice(0,60) }}..</p>
+								<h3>{{product.price}}
+									DNT</h3>
+								<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Ajouter au panier</a>
+							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			{% endif %}
 		</div><br>
 	</div>
 {% endblock %}

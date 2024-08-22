@@ -71,7 +71,7 @@ class UserController extends AbstractController
     {
         $user->setRoles(["ROLE_EDITOR", "ROLE_USER"]);
         $entityManager->flush();
-        $this->addFlash('success', 'the editor role has been added to this user');
+        $this->addFlash('editoradd', 'the editor role has been added to this user');
         return $this->redirectToRoute('app_user');
     }
 

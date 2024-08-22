@@ -265,10 +265,10 @@ class ProductController extends AbstractController
                 $addStock->setProduct($product);
                 $entityManager->persist($addStock);
                 $entityManager->flush();
-                $this->addFlash('success', 'the product has been added');
+                $this->addFlash('prodadded', 'the product has been added');
                 return $this->redirectToRoute('app_product_index');
             } else {
-                $this->addFlash('danger', 'the quantity must be superior than 0');
+                $this->addFlash('qte', 'the quantity must be superior than 0');
                 return $this->redirectToRoute(
                     'app_product_stock_add',
                     ['id' => $product->getId()]
