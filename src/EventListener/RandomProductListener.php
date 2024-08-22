@@ -41,18 +41,10 @@ class RandomProductListener
      *
      * @param RandomProductDisplayEvent $event The event object containing the random product.
      *
-     * @return JsonResponse             A JSON response containing the details of the product.
+     *            A JSON response containing the details of the product.
      */
     public function onRandomProductDisplay(RandomProductDisplayEvent $event)
     {
         $product = $event->getProduct();
-
-        return new JsonResponse(
-            [
-            'name' => $product->getName(),
-            'description' => $product->getDescription(),
-            'price' => $product->getPrice(),
-            'image' => $product->getImage(), ]
-        );
     }
 }

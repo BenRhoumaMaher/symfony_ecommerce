@@ -1,0 +1,38 @@
+<style>
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	th,
+	td {
+		border: 1px solid #ddd;
+		padding: 8px;
+		text-align: left;
+	}
+	thead {
+		background: #f2f2f2;
+	}
+	tbody tr:nth-child(odd) {
+		background: #f9f9f9;
+	}
+</style>
+<div class="container">
+	<h5>Products informations</h5>
+	<table class="table table-borderd">
+		<thead>
+			<th>Product name</th>
+			<th>description</th>
+			<th>price</th>
+		</thead>
+		{% for product in products %}
+			<tr>
+				<a href="{{path('app_show', {'id':product.id})}}" style="text-decoration: none;">
+					<td>{{product.name}}</td>
+				</a>
+				<td>{{product.description}}</td>
+				<td>{{product.price}}
+					Dt</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

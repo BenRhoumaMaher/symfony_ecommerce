@@ -20,6 +20,7 @@ use App\Repository\CategoryRepository;
 use App\Event\RandomProductDisplayEvent;
 use App\Repository\SubCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
