@@ -61,7 +61,11 @@ class HomeController extends AbstractController
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $sort = $request->query->get('sort');
-        if ($sort === 'desc') {
+        $filters = $request->query->get('filter');
+
+        if ($filters === 'bestseller') {
+            $data = $productRepository->findBestSellers();
+        } elseif ($sort === 'desc') {
             $data = $productRepository->findBy([], ['price' => 'DESC']);
         } elseif ($sort === 'asc') {
             $data = $productRepository->findBy([], ['price' => 'ASC']);
@@ -84,7 +88,8 @@ class HomeController extends AbstractController
             [
                 'products' => $products,
                 'categories' => $categoryRepository->findAll(),
-                'sort' => $sort
+                'sort' => $sort,
+                'filters' => $filters,
             ]
         );
     }

@@ -35,6 +35,17 @@ class ProductRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function findBestSellers(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, SUM(op.qte) AS HIDDEN totalQte')
+            ->join('p.orderProducts', 'op')
+            ->groupBy('p.id')
+            ->orderBy('totalQte', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     // /**
     //  * @return Product[] Returns an array of Product objects
