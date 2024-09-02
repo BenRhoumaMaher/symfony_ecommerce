@@ -94,7 +94,7 @@ class StripeController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         Stripe::setApiKey($_SERVER['STRIPE_SECRET']);
-        $endpoint_secret = 'whsec_78d8b4ee4db22da481c1bbf5760d83a50976723025cdf3387257b229d66154ee';
+        $endpoint_secret = '************************************************';
         $payload = $request->getContent();
         $sig_header = $request->headers->get('stripe-signature');
         $event = null;
