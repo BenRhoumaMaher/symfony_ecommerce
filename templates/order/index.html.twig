@@ -7,23 +7,23 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-8">
-				<h1>Checkout</h1>
+				<h1>{{ 'Checkout'|trans }}</h1>
 				{{ form_start(form, {"attr":{"data-turbo":'false'}}) }}
 				{{ form_widget(form) }}
 				<input type="submit" value="continue" class="btn btn-outline-primary mt-2">
 				{{ form_end(form) }}
 			</div>
 			<div class="col-4">
-				<span>Amount to pay</span>
+				<span>{{ 'Amount to pay'|trans }}</span>
 				<h2>
                 <span id="card-price">{{total}}</span>
 					Dt</h2>
-				<span>Delivery costs</span>
+				<span>{{ 'Delivery costs'|trans }}</span>
                 <h2>
                 <span id="shippingCost"></span>
                 Dt
                 </h2>
-                <span>Total amount to pay</span>
+                <span>{{ 'Total amount to pay'|trans }}</span>
                 <h2>
                 <span class="total-price"></span>
                 Dt

@@ -47,7 +47,7 @@ class CityController extends AbstractController
 
      * @return Response Renders the list of cities.
      */
-    #[Route('/', name: 'app_city_index', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_city_index', methods: ['GET'])]
     public function index(CityRepository $cityRepository): Response
     {
         return $this->render(
@@ -70,7 +70,7 @@ class CityController extends AbstractController
 
      * @return Response Redirects to the city list after successful creation.
      */
-    #[Route('/new', name: 'app_city_new', methods: ['GET', 'POST'])]
+    #[Route('/{_locale<%app.supported_locales%>}/new', name: 'app_city_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $city = new City();
@@ -100,7 +100,7 @@ class CityController extends AbstractController
 
      * @return Response Renders the city details.
      */
-    #[Route('/{id}', name: 'app_city_show', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/{id}', name: 'app_city_show', methods: ['GET'])]
     public function show(City $city): Response
     {
         return $this->render(
@@ -124,7 +124,7 @@ class CityController extends AbstractController
 
      * @return Response Redirects to the city list after successful update.
      */
-    #[Route('/{id}/edit', name: 'app_city_edit', methods: ['GET', 'POST'])]
+    #[Route('/{_locale<%app.supported_locales%>}/{id}/edit', name: 'app_city_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, City $city, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CityType::class, $city);
@@ -157,7 +157,7 @@ class CityController extends AbstractController
 
      * @return Response Redirects to the city list after successful deletion.
      */
-    #[Route('/{id}', name: 'app_city_delete', methods: ['POST'])]
+    #[Route('/{_locale<%app.supported_locales%>}/{id}', name: 'app_city_delete', methods: ['POST'])]
     public function delete(Request $request, City $city, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $city->getId(), $request->getPayload()->getString('_token'))) {

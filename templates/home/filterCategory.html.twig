@@ -39,7 +39,7 @@ body {
         }
 </style>
 {% endblock %}
-{% block title %}Hello HomeController!
+{% block title %}M&Code Shop
 {% endblock %}
 
 {% block body %}
@@ -57,7 +57,7 @@ body {
 							<h5 class="card-title text-secondary" style="font-weight: bold;">{{ product.name }}</h5>
                             </a>
 							<p class="card-text">{{ product.description|slice(0,40) }}..</p>
-							<a href="#" class="text-success">Ajouter au panier</a>
+							<a href="#" class="text-success">{{ 'Add to cart'|trans }}</a>
 						</div>
 					</div>
 				</div>

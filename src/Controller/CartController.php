@@ -57,7 +57,7 @@ class CartController extends AbstractController
 
      * @return Response        A Symfony Response object that renders the cart view.
      */
-    #[Route('/cart', name: 'app_cart', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/cart', name: 'app_cart', methods: ['GET'])]
     public function index(SessionInterface $session, Cart $cart): Response
     {
         $data = $cart->getCart($session);
@@ -86,7 +86,7 @@ class CartController extends AbstractController
 
      * @return Response Redirects to the cart page after updating the cart.
      */
-    #[Route('/cart/add/{id}/', name: 'app_cart_new', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/cart/add/{id}/', name: 'app_cart_new', methods: ['GET'])]
     public function addToCart(int $id, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
@@ -111,7 +111,7 @@ class CartController extends AbstractController
 
      * @return Response Redirects to the cart page after updating the cart.
      */
-    #[Route('/cart/remove/{id}/', name: 'app_cart_product_remove', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/cart/remove/{id}/', name: 'app_cart_product_remove', methods: ['GET'])]
     public function removeToCart($id, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
@@ -131,7 +131,7 @@ class CartController extends AbstractController
 
      * @return Response        Redirects to the cart page after clearing the cart.
      */
-    #[Route('/cart/remove/', name: 'app_cart_remove', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/cart/remove/', name: 'app_cart_remove', methods: ['GET'])]
     public function remove(SessionInterface $session): Response
     {
         $session->set('cart', []);

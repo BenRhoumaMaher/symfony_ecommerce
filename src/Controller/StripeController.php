@@ -47,7 +47,7 @@ class StripeController extends AbstractController
 
      * @return Response Renders the success page.
      */
-    #[Route('/pay/success', name: 'app_stripe_success')]
+    #[Route('/{_locale<%app.supported_locales%>}/pay/success', name: 'app_stripe_success')]
     public function success(Cart $cart, SessionInterface $session): Response
     {
         $session->set(
@@ -67,7 +67,7 @@ class StripeController extends AbstractController
      *
      * @return Response Renders the cancellation page.
      */
-    #[Route('/pay/cancel', name: 'app_stripe_cancel')]
+    #[Route('/{_locale<%app.supported_locales%>}/pay/cancel', name: 'app_stripe_cancel')]
     public function cancel(): Response
     {
         return $this->render(
@@ -87,7 +87,7 @@ class StripeController extends AbstractController
 
      * @return Response Responds to the webhook notification.
      */
-    #[Route('/stripe/notify', name: 'app_stripe_notify')]
+    #[Route('/{_locale<%app.supported_locales%>}/stripe/notify', name: 'app_stripe_notify')]
     public function stripeNotify(
         Request $request,
         OrderRepository $orderRepository,

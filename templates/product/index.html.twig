@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}{{ 'Product index'|trans }}{% endblock %}
 
 {% block body %}
 <style>
@@ -47,17 +47,17 @@ body {
         }
 </style>
 <div class="table-container mt-5 mb-5 container-fluid">
-    <h1>Product index</h1>
+    <h1>{{ 'Product index'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>{{ 'Name'|trans }}</th>
                 <th>Description</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>actions</th>
+                <th>{{ 'Price'|trans }}</th>
+                <th>{{ 'Stock'|trans }}</th>
+                <th>{{ 'actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -72,24 +72,24 @@ body {
                 {% if product.stock > 0 %}
                 {{ product.stock }}</td>
                 {% else %}
-                <span class="text-bg-danger">Out of stock</span>
+                <span class="text-bg-danger">{{ 'Out of stock'|trans }}</span>
                 {% endif %}
                 <td>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}" style="text-decoration: none;" class="text-info">edit</a>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}" style="text-decoration: none;" class="text-info">{{ 'edit'|trans }}</a>
         |
-                    <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" style="text-decoration: none;" class="text-danger">Add stock</a>
+                    <a href="{{ path('app_product_stock_add', {'id': product.id}) }}" style="text-decoration: none;" class="text-danger">{{ 'Add stock'|trans }}</a>
                 </td>
             </tr>
             {% set counter = counter + 1 %}
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_product_new') }}" class="btn btn-primary">Create new</a>
+    <a href="{{ path('app_product_new') }}" class="btn btn-primary">{{ 'Create new'|trans }}</a>
 
 </div>
 {% endblock %}

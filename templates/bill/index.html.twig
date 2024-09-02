@@ -40,10 +40,10 @@ tbody tr:nth-child(odd){
         <span>Order body</span>
         <table class="table table-borderd">
             <thead>
-            <th>Product name</th>
-            <th>Unity price</th>
-            <th>quantity</th>
-            <th>total price</th>
+            <th>{{ 'Product name'|trans }}</th>
+            <th>{{ 'Unity price'|trans }}</th>
+            <th>{{ 'quantity'|trans }}</th>
+            <th>{{ 'total price'|trans }}</th>
             </thead>
             {% for product in order.orderProducts %}
                 <tr>
@@ -54,7 +54,7 @@ tbody tr:nth-child(odd){
                 </tr>
             {% endfor %}
         </table>
-        <h5>Delivery costs : {{order.city.shippingCost}} Dt</h5>
+        <h5>{{ 'Delivery costs'|trans }} : {{order.city.shippingCost}} Dt</h5>
         <hr>
-        <h2>Total to pay : {{order.totalPrice}} Dt</h2>
+        <h2>{{ 'Total to pay'|trans }} : {{order.totalPrice}} Dt</h2>
         </div>

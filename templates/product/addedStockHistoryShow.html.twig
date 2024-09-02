@@ -5,8 +5,8 @@
 		<table class="table">
 			<tr>
 				<th>id</th>
-				<th>quantiy</th>
-				<th>date added</th>
+				<th>quantiy{{ 'quantity'|trans }}</th>
+				<th>{{ 'date added'|trans }}</th>
 			</tr>
 			{% for productAdded in addProductHistory %}
 				<tr>

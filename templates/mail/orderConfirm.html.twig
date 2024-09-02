@@ -17,20 +17,20 @@
 	}
 </style>
 <div class="container">
-	<h2>Facture N:
+	<h2>{{ 'Facture N'|trans }}:
 		{{order.id}}</h2>
 	<hr>
-	<span>Date:
-		{{order.createdAt|date}}</span>
+	<span>{{ 'Date'|trans }}:	
+	{{order.createdAt|date}}</span>
 	<br>
-	<h5>Client informations</h5>
+	<h5>{{ 'Client informations'|trans }}</h5>
 	<table class="table table-borderd">
 		<thead>
-			<th>name</th>
-			<th>lastname</th>
-			<th>phone</th>
-			<th>adress</th>
-			<th>city</th>
+			<th>{{ 'name'|trans }}</th>
+			<th>{{ 'lastname'|trans }}</th>
+			<th>{{ 'phone'|trans }}</th>
+			<th>{{ 'adress'|trans }}</th>
+			<th>{{ 'city'|trans }}</th>
 		</thead>
 		<tr>
 			<td>{{order.firstName}}</td>
@@ -40,13 +40,13 @@
 			<td>{{order.city.name}}</td>
 		</tr>
 	</table>
-	<span>Order body</span>
+	<span>{{ 'Order body'|trans }}</span>
 	<table class="table table-borderd">
 		<thead>
-			<th>Product name</th>
-			<th>Unity price</th>
-			<th>quantity</th>
-			<th>total price</th>
+			<th>{{ 'Product name'|trans }}</th>
+			<th>{{ 'Unity price'|trans }}</th>
+			<th>{{ 'quantity'|trans }}</th>
+			<th>{{ 'total price'|trans }}</th>
 		</thead>
 		{% for product in order.orderProducts %}
 			 <tr>
@@ -57,11 +57,11 @@
                 </tr>
 		{% endfor %}
 	</table>
-	<h5>Delivery costs :
+	<h5>{{ 'Delivery costs'|trans }} :
 		{{order.city.shippingCost}}
 		Dt</h5>
 	<hr>
-	<h2>Total to pay :
+	<h2>{{ 'Total to pay'|trans }} :
 		{{order.totalPrice}}
 		Dt</h2>
 </div>

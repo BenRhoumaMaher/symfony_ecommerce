@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
     <br>
-    <h1>Add stock for : <span class="text-secondary">{{ product.name }}</span></h1>
+    <h1>{{ 'Add stock for'|trans }} : <span class="text-secondary">{{ product.name }}</span></h1>
     <br>
     {% include "layouts/_flash_message.html.twig" %}
     {{ form_start(form) }}

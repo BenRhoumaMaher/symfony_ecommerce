@@ -1,5 +1,5 @@
 {{ form_start(form) }}
-<label for="">Name of subcategory</label>
+<label for="">{{ 'Name of subcategory'|trans }}</label>
     {{ form_widget(form.name, {attr: {'class': 'form form-control'}}) }}
     <label for="">category</label>
     {{ form_widget(form.category, {attr: {'class': 'form form-control'}}) }}

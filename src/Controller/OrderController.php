@@ -65,7 +65,7 @@ class OrderController extends AbstractController
 
      * @return Response Renders the order form and processes the order submission.
      */
-    #[Route('/order', name: 'app_order')]
+    #[Route('/{_locale<%app.supported_locales%>}/order', name: 'app_order')]
     public function index(
         Request $request,
         SessionInterface $session,
@@ -141,7 +141,7 @@ class OrderController extends AbstractController
      * @return Response Renders the list of orders based on the specified type.
      */
 
-    #[Route("/editor/order/{type}", name: 'app_orders_show')]
+    #[Route("/{_locale<%app.supported_locales%>}/editor/order/{type}", name: 'app_orders_show')]
     public function getAllOrder($type, OrderRepository $orderRepository, Request $request, PaginatorInterface $paginator): Response
     {
         if ($type === 'is-completed') {
@@ -178,7 +178,7 @@ class OrderController extends AbstractController
 
      * @return Response Redirects back to the referring page with a success flash message.
      */
-    #[Route('/editor/order/{id}/is-completed/update', name: 'app_orders_is_completed_update')]
+    #[Route('/{_locale<%app.supported_locales%>}/editor/order/{id}/is-completed/update', name: 'app_orders_is_completed_update')]
     public function isCompletedUpdate(
         $id,
         OrderRepository $orderRepository,
@@ -199,7 +199,7 @@ class OrderController extends AbstractController
 
      * @return Response Redirects to the orders list with a danger flash message.
      */
-    #[Route('/editor/order/{id}/remove', name: 'app_orders_remove')]
+    #[Route('/{_locale<%app.supported_locales%>}/editor/order/{id}/remove', name: 'app_orders_remove')]
     public function removeOrder(Order $order, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($order);
@@ -212,7 +212,7 @@ class OrderController extends AbstractController
      *
      * @return Response Renders the confirmation message.
      */
-    #[Route("/order-ok-message", name: 'order_ok_message')]
+    #[Route("/{_locale<%app.supported_locales%>}/order-ok-message", name: 'order_ok_message')]
     public function orderMessage(): Response
     {
         return $this->render('order/order_message.twig');
@@ -225,7 +225,7 @@ class OrderController extends AbstractController
 
      * @return Response Returns the shipping cost as JSON.
      */
-    #[Route('/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]
+    #[Route('/{_locale<%app.supported_locales%>}/city/{id}/shipping/cost', name: 'app_city_shipping_cost')]
     public function cityShippingCost(City $city): Response
     {
         $cityShippingPrice = $city->getShippingCost();

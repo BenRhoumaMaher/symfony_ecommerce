@@ -38,7 +38,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class BillController extends AbstractController
 {
-    #[Route('/editor/order/{id}/bill', name: 'app_bill')]
+    #[Route('/{_locale<%app.supported_locales%>}/editor/order/{id}/bill', name: 'app_bill')]
 
     /**
      * Generates and streams a PDF bill for a given order

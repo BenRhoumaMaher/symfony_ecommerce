@@ -39,7 +39,7 @@ body {
         }
 </style>
 {% endblock %}
-{% block title %}Hello HomeController!
+{% block title %}M&Code Shop
 {% endblock %}
 
 {% block body %}
@@ -54,12 +54,12 @@ body {
 						<h5 class="card-title text-secondary" style="font-weight: bold;">{{products.name}}</h5>
 						<p class="card-text">{{products.description}}</p>
                         <h4>{{products.price}} DNT</h4>
-                        <a href="{{path('app_cart_new',{'id': products.id})}}" class="text-success">Add to card</a>
+                        <a href="{{path('app_cart_new',{'id': products.id})}}" class="text-success">{{ 'Add to cart'|trans }}</a>
 					</div>
 				</div>
 			</div>
 		</div>
-        <h2>Latest added products</h2>
+        <h2>{{ 'Latest added products'|trans }}</h2>
         <div class="row mb-5">
 			{% for product in lastProducts %}
 				<div class="col-md-3 mt-4">
@@ -73,7 +73,7 @@ body {
                             </a>
 							<p class="card-text">{{ product.description|slice(0,40) }}..</p>
                             <h4>{{product.price}} DNT</h4>
-							<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Ajouter au panier</a>
+							<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">{{ 'Add to cart'|trans }}</a>
 						</div>
 					</div>
 				</div>

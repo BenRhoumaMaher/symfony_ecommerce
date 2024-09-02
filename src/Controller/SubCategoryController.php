@@ -35,7 +35,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */
-#[Route('/admin/sub/category')]
+#[Route('/{_locale<%app.supported_locales%>}/admin/sub/category')]
 class SubCategoryController extends AbstractController
 {
     /**

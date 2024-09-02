@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Word search results "
+		<h1>{{ 'Word search results'|trans }}"
 			{{ word }}
 			"</h1>
 		<div class="row">
@@ -14,7 +14,7 @@
 													background-repeat: no-repeat; background-position: center;
 													background-size: cover; position: relative;
 													col-md-12 text-center text-bold">
-					<h1 class="text-danger">No products found !!!</h1>
+					<h1 class="text-danger">{{ 'No products found'|trans }}</h1>
 				</div>
 			{% else %}
 				{% for product in products %}
@@ -28,7 +28,7 @@
 								<p class="card-text">{{ product.description|slice(0,60) }}..</p>
 								<h3>{{product.price}}
 									DNT</h3>
-								<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Ajouter au panier</a>
+								<a href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">{{ 'Add to cart'|trans }}</a>
 							</div>
 						</div>
 					</div>

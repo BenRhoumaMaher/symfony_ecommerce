@@ -43,7 +43,7 @@ class SearchEngineController extends AbstractController
 
      * @return Response Renders the search results page with the found products and the original search term.
      */
-    #[Route('/search/engine', name: 'app_search_engine', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/search/engine', name: 'app_search_engine', methods: ['GET'])]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
         if ($request->isMethod('GET')) {

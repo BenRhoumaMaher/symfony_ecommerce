@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
 
      * @return Response Returns the registration form if the form is not submitted or invalid, otherwise logs the user in and redirects them.
      */
-    #[Route('/register', name: 'app_register')]
+    #[Route('/{_locale<%app.supported_locales%>}/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
         $user = new User();

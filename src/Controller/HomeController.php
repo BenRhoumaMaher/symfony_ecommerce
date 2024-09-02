@@ -41,6 +41,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class HomeController extends AbstractController
 {
+    #[Route('/')]
+    public function indexNoLocale(): Response
+    {
+        return $this->redirectToRoute('app_home', ['_locale' => 'en']);
+    }
     /**
      * Displays the homepage with a paginated list of products and all available categories.
      *
@@ -52,7 +57,7 @@ class HomeController extends AbstractController
 
      * @return Response Renders the homepage with the paginated list of products and categories.
      */
-    #[Route('/', name: 'app_home', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home', methods: ['GET'])]
     public function index(
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
@@ -103,7 +108,7 @@ class HomeController extends AbstractController
      *
      * @return JsonResponse A JSON response containing the details of a random product.
     */
-    #[Route('/random-product', name: 'random_product_route', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/random-product', name: 'random_product_route', methods: ['GET'])]
     public function getRandomProduct(
         ProductRepository $productRepository
     ): JsonResponse {
@@ -129,7 +134,7 @@ class HomeController extends AbstractController
 
      * @return Response Renders the product details along with other recent products and categories.
      */
-    #[Route('/product/{id}/show', name: 'app_show', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/product/{id}/show', name: 'app_show', methods: ['GET'])]
     public function show(Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
     {
         $lastProducts = $productRepository->findBy([], ['id' => 'DESC'], limit: 4);
@@ -152,7 +157,7 @@ class HomeController extends AbstractController
 
      * @return Response Renders the filtered list of products along with the selected subcategory and all available categories.
      */
-    #[Route('/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods: ['GET'])]
     public function filter($id, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository): Response
     {
         $products = $subCategoryRepository->find($id)->getProducts();
@@ -178,7 +183,7 @@ class HomeController extends AbstractController
      *
      * @return Response         A rendered view showing products from the specified category and its subcategories.
     */
-    #[Route('/category/{id}/filter', name: 'app_category_product_filter', methods: ['GET'])]
+    #[Route('/{_locale<%app.supported_locales%>}/category/{id}/filter', name: 'app_category_product_filter', methods: ['GET'])]
     public function filterCategories($id, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->find($id);

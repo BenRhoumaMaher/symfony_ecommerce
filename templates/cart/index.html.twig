@@ -4,14 +4,14 @@
 
 {% block body %}
 <div class="container">
-<h1>Cart</h1>
+<h1>{{ 'Cart'|trans }}</h1>
 <table class="table table-bordered">
 <tr>
-<th>Product name</th>
-<th>price</th>
-<th>quantity</th>
-<th>total price</th>
-<th>action</th>
+<th>{{ 'Product name'|trans }}</th>
+<th>{{ 'price'|trans }}</th>
+<th>{{ 'quantity'|trans }}</th>
+<th>{{ 'total price'|trans }}</th>
+<th>{{ 'action'|trans }}</th>
 </tr>
 {% for item in items %}
     <tr>
@@ -20,19 +20,20 @@
     <td>{{item.quantity}}</td>
     <td>{{item.product.price * item.quantity}}</td>
     <td>
-    <a href="{{path('app_cart_product_remove',{'id':item.product.id})}}" class="text-danger text-decoration-none">Delete to cart</a>
+    <a href="{{path('app_cart_product_remove',{'id':item.product.id})}}" 
+    class="text-danger text-decoration-none">{{ 'Delete to cart'|trans }}</a>
     </td>
     </tr>
     {% else %}
-    <p>your cart is empty</p>
+    <p>{{ 'your cart is empty'|trans }}</p>
 {% endfor %}
 </table>
 {% if total > 0 %}
 <br><br>
 <h2>Total: {{total}} Dt</h2>
 <div class="row">
-<a data-turbo="false" href="{{path('app_order')}}" class="btn btn-primary col-2 m-lg-1">Validate the order</a>
-<a href="{{path('app_cart_remove')}}" class="btn btn-outline-danger col-2 m-lg-1">Delete cart</a>
+<a data-turbo="false" href="{{path('app_order')}}" class="btn btn-primary col-2 m-lg-1">{{ 'Validate the order'|trans }}</a>
+<a href="{{path('app_cart_remove')}}" class="btn btn-outline-danger col-2 m-lg-1">{{ 'Delete cart'|trans }}</a>
 </div>
 {% endif %}
 </div>

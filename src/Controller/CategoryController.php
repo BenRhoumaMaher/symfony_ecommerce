@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
 
      * @return Response Renders the list of categories.
      */
-    #[Route('/admin/category', name: 'app_category')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/category', name: 'app_category')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findBy([], ['id' => "ASC"]);
@@ -70,7 +70,7 @@ class CategoryController extends AbstractController
 
      * @return Response Redirects to the category list after successful creation.
      */
-    #[Route('/admin/category/new', name: 'app_category_new')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/category/new', name: 'app_category_new')]
     public function addCategory(EntityManagerInterface $entityManager, Request $request): Response
     {
         $category = new Category();
@@ -105,7 +105,7 @@ class CategoryController extends AbstractController
 
      * @return Response              Redirects to the category list after successful update.
      */
-    #[Route('/admin/category/{id}/update', name: 'app_category_update')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/category/{id}/update', name: 'app_category_update')]
     public function update(Category $category, EntityManagerInterface $entityManager, Request $request): Response
     {
         $form = $this->createForm(CategoryFormType::class, $category);
@@ -136,7 +136,7 @@ class CategoryController extends AbstractController
 
      * @return Response Redirects to the category list after successful deletion.
      */
-    #[Route('/admin/category/{id}/delete', name: 'app_category_delete')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/category/{id}/delete', name: 'app_category_delete')]
     public function delete(Category $category, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($category);

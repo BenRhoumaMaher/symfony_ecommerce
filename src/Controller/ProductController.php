@@ -52,7 +52,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  * @license  No license (Personal project)
  * @link     https://symfony.com/doc/current/controller.html
  */
-#[Route('/editor/product')]
+#[Route('/{_locale<%app.supported_locales%>}/editor/product')]
 class ProductController extends AbstractController
 {
     private $mailer;

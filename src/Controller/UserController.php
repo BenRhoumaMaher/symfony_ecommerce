@@ -44,7 +44,7 @@ class UserController extends AbstractController
 
      * @return Response Renders the list of users.
      */
-    #[Route('/admin/user', name: 'app_user')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/user', name: 'app_user')]
     public function index(
         UserRepository $userRepository,
         CategoryRepository $categoryRepository
@@ -66,7 +66,7 @@ class UserController extends AbstractController
 
      * @return Response Redirects to the user index page after updating the user's role.
      */
-    #[Route('/admin/user/{id}/to/editor', name: 'app_user_to_editor')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/user/{id}/to/editor', name: 'app_user_to_editor')]
     public function changeRole(EntityManagerInterface $entityManager, User $user): Response
     {
         $user->setRoles(["ROLE_EDITOR", "ROLE_USER"]);
@@ -83,7 +83,7 @@ class UserController extends AbstractController
 
      * @return Response Redirects to the user index page after updating the user's role.
      */
-    #[Route('/admin/user/{id}/remove/editor/role', name: 'app_user_remove_editor_role')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/user/{id}/remove/editor/role', name: 'app_user_remove_editor_role')]
     public function editorRoleRemove(EntityManagerInterface $entityManager, User $user): Response
     {
         $user->setRoles([]);
@@ -100,7 +100,7 @@ class UserController extends AbstractController
 
      * @return Response Redirects to the user index page after deletion.
      */
-    #[Route('/admin/user/{id}/remove', name: 'app_user_remove')]
+    #[Route('/{_locale<%app.supported_locales%>}/admin/user/{id}/remove', name: 'app_user_remove')]
     public function userRemove(EntityManagerInterface $entityManager, $id, UserRepository $userRepository): Response
     {
         $userFind = $userRepository->find($id);

@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}City index{% endblock %}
+{% block title %}{{ 'City index'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container">
 
-    <h1>City index</h1>
+    <h1>{{ 'City index'|trans }}</h1>
 
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>ShippingCost</th>
-                <th>actions</th>
+                <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'ShippingCost'|trans }}</th>
+                <th>{{ 'actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,18 +23,18 @@
                 <td>{{ city.name }}</td>
                 <td>{{ city.shippingCost }}</td>
                 <td>
-                    <a href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
-                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
+                    <a href="{{ path('app_city_show', {'id': city.id}) }}">{{ 'show'|trans }}</a>
+                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">{{ 'edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_city_new') }}">Create new</a>
+    <a href="{{ path('app_city_new') }}">{{ 'Create new'|trans }}</a>
 </div>
 {% endblock %}

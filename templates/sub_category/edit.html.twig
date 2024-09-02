@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit SubCategory{% endblock %}
+{% block title %}{{ 'Edit SubCategory'|trans }}{% endblock %}
 
 {% block body %}
 
     <div class="container">
         <div class="form">
         <br>
-        <h2>Modify subcategory</h2>
+        <h2>{{ 'Modify subcategory'|trans }}</h2>
         <br>
         {{ form_start(form) }}
         {{ form_row(form.name, {'attr': {'class': 'form form-control'}}) }}

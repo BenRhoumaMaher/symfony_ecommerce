@@ -45,25 +45,25 @@
 
 {% block body %}
 	<div class="container">
-		<h1 class="">Products</h1>
+		<h1 class="">{{ 'Products'|trans }}</h1>
 		<div class="dropdown mb-4">
 			<button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-				Sort by
+				{{ 'Sort By'|trans }}
 			</button>
 			<ul class="dropdown-menu" aria-labelledby="sortDropdown">
 				<li>
 					<a class="dropdown-item {% if sort == 'asc' %}active{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'sort': 'asc', 'filter': null})) }}">
-						Price Ascending
+						{{ 'Price Ascending'|trans }}
 					</a>
 				</li>
 				<li>
 					<a class="dropdown-item {% if sort == 'desc' %}active{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'sort': 'desc', 'filter': null})) }}">
-						Price Descending
+						{{ 'Price Descending'|trans }}
 					</a>
 				</li>
 				<li>
 					<a class="dropdown-item {% if filters == 'bestseller' %}active{% endif %}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'filter': 'bestseller', 'sort': null})) }}">
-						Best Sellers
+						{{ 'Best Sellers'|trans }}
 					</a>
 				</li>
 			</ul>
@@ -82,7 +82,7 @@
 							<p class="card-text">{{ product.description|slice(0,50) }}..</p>
 							<h4>{{product.price}}
 								DNT</h4>
-							<a style="text-decoration: none;" href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">Add to Cart</a>
+							<a style="text-decoration: none;" href="{{path('app_cart_new',{'id': product.id})}}" class="text-success">{{ 'Add to Cart'|trans }}</a>
 						</div>
 					</div>
 				</div>

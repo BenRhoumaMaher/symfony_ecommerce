@@ -17,12 +17,12 @@
 	}
 </style>
 <div class="container">
-	<h5>Products informations</h5>
+	<h5>{{ 'Products informations'|trans }}</h5>
 	<table class="table table-borderd">
 		<thead>
-			<th>Product name</th>
+			<th>{{ 'Product name'|trans }}</th>
 			<th>description</th>
-			<th>price</th>
+			<th>price{{ 'price'|trans }}</th>
 		</thead>
 		{% for product in products %}
 			<tr>

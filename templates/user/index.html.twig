@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateurs !{% endblock %}
+{% block title %}{{ 'Users'|trans }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
@@ -8,8 +8,8 @@
     <tr>
         <th>id</th>
         <th>email</th>
-        <th>name</th>
-        <th>lastname</th>
+        <th>{{ 'name'|trans }}</th>
+        <th>{{ 'lastname'|trans }}</th>
         <th>role</th>
         <th>action</th>
         </tr>
@@ -21,9 +21,9 @@
         <td>{{ user.lastName }}</td>
         <td>
         {% if ('ROLE_ADMIN' in user.roles) %}
-        administrateur
+        {{ 'administrator'|trans }}
         {% elseif ('ROLE_EDITOR') in user.roles %}
-            editeur
+            {{ 'editor'|trans }}
             {% else %}
             client
         {% endif %}
@@ -36,17 +36,17 @@
             class=" btn btn-outline-primary"
             href="{{path('app_user_to_editor', {'id': user.id})}}"
             >
-            add as editor
+            {{ 'add as editor'|trans }}
             </a>
             {% else %}
                 <a onclick="return confirm('do you really want to remove the editor role from this user ?')" 
             class=" btn btn-outline-danger"
             href="{{path('app_user_remove_editor_role', {'id': user.id})}}"
             >
-            delete editor
+            {{ 'delete editor'|trans }}
             </a>
         {% endif %}
-        <a onclick="return confirm('do you really want to delete this user ?') href="{{path('app_user_remove', {'id': user.id})}}" class="btn btn-danger">Remove</a>
+        <a onclick="return confirm('do you really want to delete this user ?')" href="{{path('app_user_remove', {'id': user.id})}}" class="btn btn-danger">{{ 'Remove'|trans }}</a>
         {% endif %}
         </td>
     </tr>
