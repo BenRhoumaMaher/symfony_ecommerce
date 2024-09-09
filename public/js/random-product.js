@@ -5,8 +5,10 @@ function truncateText (text, maxLength) {
 }
 
 function displayRandomProduct () {
-  if (window.location.pathname === '/') {
-    fetch('/random-product')
+  const currentRoute = document.getElementById('main-list').getAttribute('data-route');
+  const currentLocale = document.getElementById('main-list').getAttribute('data-locale');
+  if (currentRoute === 'app_home') {
+    fetch(`/${currentLocale}/random-product`)
       .then(response => response.json())
       .then(data => {
         document.getElementById('product-name').innerText = data.name
@@ -19,7 +21,7 @@ function displayRandomProduct () {
         const imagePath = '/uploads/images/' + data.image
         document.getElementById('product-image').src = imagePath
 
-        const productLink = '/product/' + data.id + '/show'
+        const productLink = `/${currentLocale}/product/` + data.id + '/show'
         document.getElementById('product-link').href = productLink
 
         const card = document.getElementById('random-product-card')

@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container" id="main-list" data-route="{{ app.request.attributes.get('_route') }}" data-locale="{{ app.request.locale }}">
 		<h1 class="">{{ 'Products'|trans }}</h1>
 		<div class="dropdown mb-4">
 			<button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
