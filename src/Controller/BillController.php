@@ -16,6 +16,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Repository\OrderRepository;
@@ -49,27 +50,72 @@ class BillController extends AbstractController
      * @return Response A Symfony Response object that streams
      * the generated PDF to the client.
      */
-    public function index($id, OrderRepository $orderRepository): Response
-    {
+    public function index(
+        Order $order,
+        OrderRepository $orderRepository
+    ): Response {
+        return $this->streamBill($order, $orderRepository);
+    }
 
-        $order = $orderRepository->find($id);
+    /**
+     * Renders the bill HTML template and generates the PDF bill
+     *
+     * @param Order           $order           The order entity containing details about the order.
+     * @param OrderRepository $orderRepository Service responsible for fetching orders from the database.
+     *
+     * @return Response A Symfony Response object that streams the generated PDF to the client.
+     */
+    private function streamBill(
+        Order $order,
+        OrderRepository $orderRepository
+    ): Response {
 
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions = $this->createPdfOptions();
         $domPdf = new Dompdf($pdfOptions);
+
         $html = $this->renderView(
             'bill/index.html.twig',
             [
                 'order' => $order
             ]
         );
+
         $domPdf->loadHtml($html);
         $domPdf->render();
+
+        return $this->streamPDF($domPdf, $order);
+    }
+
+    /**
+     * Creates options for PDF generation using Dompdf
+     *
+     * @return Options The Dompdf Options object configured with default font settings.
+     */
+    private function createPdfOptions(): Options
+    {
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        return $options;
+    }
+
+    /**
+     * Streams the generated PDF bill to the client
+     *
+     * @param Dompdf $domPdf The Dompdf instance containing the rendered PDF content.
+     * @param Order  $order  The order entity containing details about the order.
+     *
+     * @return Response A Symfony Response object that streams the generated PDF to the client.
+     */
+    private function streamPDF(
+        Dompdf $domPdf,
+        Order $order
+    ): Response {
+
         $domPdf->stream(
             "M&Code-symfony-bill-" . $order->getId() . ' .pdf',
             [
-                'Attachment' => false,
-            ]
+                    'Attachment' => false,
+                ]
         );
         return new Response(
             '',

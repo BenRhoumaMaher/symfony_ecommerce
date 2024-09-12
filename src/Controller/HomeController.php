@@ -14,13 +14,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\Event\RandomProductDisplayEvent;
 use App\Repository\SubCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -65,19 +65,38 @@ class HomeController extends AbstractController
         PaginatorInterface $paginator,
         EventDispatcherInterface $eventDispatcher
     ): Response {
+        return $this->renderHome(
+            $productRepository,
+            $categoryRepository,
+            $request,
+            $paginator,
+            $eventDispatcher
+        );
+    }
+
+    /**
+     * Renders the homepage with paginated products and categories.
+     *
+     * @param ProductRepository        $productRepository  The repository to fetch products from the database.
+     * @param CategoryRepository       $categoryRepository The repository to fetch categories from the database.
+     * @param Request                  $request            The current HTTP request.
+     * @param PaginatorInterface       $paginator          The paginator service to paginate the products.
+     * @param EventDispatcherInterface $eventDispatcher    The event dispatcher service to handle events.
+     *
+     * @return Response Renders the homepage view.
+     */
+    private function renderHome(
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository,
+        Request $request,
+        PaginatorInterface $paginator,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $sort = $request->query->get('sort');
         $filters = $request->query->get('filter');
 
-        if ($filters === 'bestseller') {
-            $data = $productRepository->findBestSellers();
-        } elseif ($sort === 'desc') {
-            $data = $productRepository->findBy([], ['price' => 'DESC']);
-        } elseif ($sort === 'asc') {
-            $data = $productRepository->findBy([], ['price' => 'ASC']);
-        } else {
-            $data = $productRepository->findAll();
-            shuffle($data);
-        }
+        $data = $this->getData($productRepository, $sort, $filters);
+
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
@@ -100,6 +119,33 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Fetches data based on sorting and filtering criteria.
+     *
+     * @param ProductRepository $productRepository The repository to fetch products from the database.
+     * @param string|null       $sort              The sorting criterion (null for no sorting).
+     * @param string|null       $filters           The filtering criterion (null for no filters).
+     *
+     * @return array The fetched data based on the provided criteria.
+     */
+    private function getData(
+        ProductRepository $productRepository,
+        ?string $sort,
+        ?string $filters
+    ) {
+        if ($filters === 'bestseller') {
+            return $productRepository->findBestSellers();
+        } elseif ($sort === 'desc') {
+            return $productRepository->findBy([], ['price' => 'DESC']);
+        } elseif ($sort === 'asc') {
+            return $productRepository->findBy([], ['price' => 'ASC']);
+        } else {
+            $products =  $productRepository->findAll();
+            shuffle($products);
+            return $products;
+        }
+    }
+
+    /**
      * Provides a random product as JSON data.
      *
      * This endpoint returns a random product from the database, including its ID, name, description, price, and image URL.
@@ -112,16 +158,15 @@ class HomeController extends AbstractController
     public function getRandomProduct(
         ProductRepository $productRepository
     ): JsonResponse {
-        $products = $productRepository->findAll();
-        $randomProduct = $products[array_rand($products)];
 
-        return new JsonResponse(
+        return $this->json(
             [
-            'id' => $randomProduct->getId(),
-            'name' => $randomProduct->getName(),
-            'description' => $randomProduct->getDescription(),
-            'price' => $randomProduct->getPrice(),
-            'image' => $randomProduct->getImage(),]
+            'id' => $productRepository->findOneBy([])->getId(),
+            'name' => $productRepository->findOneBy([])->getName(),
+            'description' => $productRepository->findOneBy([])->getDescription(),
+            'price' => $productRepository->findOneBy([])->getPrice(),
+            'image' => $productRepository->findOneBy([])->getImage(),
+            ]
         );
     }
 
@@ -135,8 +180,11 @@ class HomeController extends AbstractController
      * @return Response Renders the product details along with other recent products and categories.
      */
     #[Route('/{_locale<%app.supported_locales%>}/product/{id}/show', name: 'app_show', methods: ['GET'])]
-    public function show(Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
-    {
+    public function show(
+        Product $product,
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
         $lastProducts = $productRepository->findBy([], ['id' => 'DESC'], limit: 4);
         return $this->render(
             'home/show.html.twig',
@@ -158,10 +206,13 @@ class HomeController extends AbstractController
      * @return Response Renders the filtered list of products along with the selected subcategory and all available categories.
      */
     #[Route('/{_locale<%app.supported_locales%>}/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods: ['GET'])]
-    public function filter($id, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository): Response
-    {
-        $products = $subCategoryRepository->find($id)->getProducts();
+    public function filter(
+        $id,
+        SubCategoryRepository $subCategoryRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
         $subCategory = $subCategoryRepository->find($id);
+        $products = $subCategory->getProducts();
         return $this->render(
             'home/filter.html.twig',
             [
@@ -184,9 +235,10 @@ class HomeController extends AbstractController
      * @return Response         A rendered view showing products from the specified category and its subcategories.
     */
     #[Route('/{_locale<%app.supported_locales%>}/category/{id}/filter', name: 'app_category_product_filter', methods: ['GET'])]
-    public function filterCategories($id, CategoryRepository $categoryRepository): Response
-    {
-        $category = $categoryRepository->find($id);
+    public function filterCategories(
+        Category $category,
+        CategoryRepository $categoryRepository
+    ): Response {
         $products = [];
         foreach ($category->getSubCategories() as $subCategory) {
             foreach ($subCategory->getProducts() as $product) {
