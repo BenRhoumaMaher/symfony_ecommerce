@@ -73,7 +73,7 @@ class OrderController extends AbstractController
         Cart $cart,
     ): Response {
 
-        $data = $cart->getCart($session);
+        $data = $cart->getCart();
 
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
